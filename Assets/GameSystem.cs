@@ -11,17 +11,24 @@ public class GameSystem : MonoBehaviour
     BallScript currentDraggingBall;
     int score;
     [SerializeField] Text scoreText = default;
+    public Text timerText;
+    public float timeValue;
+
 
     void Start()
     {
+        timeValue = 60f;
         score = 0;
         UpdateScore(0);
-        StartCoroutine(ballGenerator.Spawns(40));
+        StartCoroutine(ballGenerator.Spawns(70));
         
     }
 
     void Update()
     {
+        if (timeValue > 0) timeValue -= Time.deltaTime;
+        timerText.text = Mathf.FloorToInt(timeValue).ToString();
+
         if (Input.GetMouseButtonDown(0))
         {            
             OnDragBegin();
@@ -77,6 +84,7 @@ public class GameSystem : MonoBehaviour
             }
             StartCoroutine(ballGenerator.Spawns(removeCount));            
             UpdateScore(removeCount * 100);
+            timeValue += removeCount;
         }
         removeBalls.Clear();
         isDragging = false;
