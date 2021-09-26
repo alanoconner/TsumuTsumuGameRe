@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class GameSystem : MonoBehaviour
@@ -13,6 +14,8 @@ public class GameSystem : MonoBehaviour
     [SerializeField] Text scoreText = default;
     public Text timerText;
     public float timeValue;
+    public Text honors;
+    private float timeFixer;
 
 
     void Start()
@@ -41,6 +44,7 @@ public class GameSystem : MonoBehaviour
         {
             OnDragging();
         }
+        if (timeFixer - timeValue > 3f || timeFixer - timeValue < (-3f)) honors.text = "";
     }
 
     void OnDragBegin()
@@ -85,6 +89,10 @@ public class GameSystem : MonoBehaviour
             StartCoroutine(ballGenerator.Spawns(removeCount));            
             UpdateScore(removeCount * 100);
             timeValue += removeCount;
+            if (removeCount >= 9) honors.text = "Awesome!";
+            else if (removeCount >= 6) honors.text = "Great!";
+            else honors.text = "Good!";
+            timeFixer = timeValue;
         }
         removeBalls.Clear();
         isDragging = false;
@@ -103,6 +111,20 @@ public class GameSystem : MonoBehaviour
     {
         score += point;
         scoreText.text = score.ToString();
+    }
+
+    public void OnPause()
+    {
+        Time.timeScale = 0;
+    }
+    public void OnContinue()
+    {
+        Time.timeScale = 1;
+    }
+    public void OnRestart()
+    {
+        SceneManager.LoadScene("SampleScene");
+        Time.timeScale = 1;
     }
 
 }
