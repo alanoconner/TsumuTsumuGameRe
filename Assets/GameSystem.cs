@@ -15,7 +15,10 @@ public class GameSystem : MonoBehaviour
     public Text timerText;
     public float timeValue;
     public Text honors;
+    public Text comboText;
     private float timeFixer;
+    private float comboChecker;    
+    private int comboIndex;
 
 
     void Start()
@@ -24,6 +27,7 @@ public class GameSystem : MonoBehaviour
         score = 0;
         UpdateScore(0);
         StartCoroutine(ballGenerator.Spawns(70));
+        comboChecker = 0f;
         
     }
 
@@ -45,6 +49,17 @@ public class GameSystem : MonoBehaviour
             OnDragging();
         }
         if (timeFixer - timeValue > 3f || timeFixer - timeValue < (-3f)) honors.text = "";
+
+
+        comboChecker += Time.deltaTime;
+        
+        if (comboIndex >= 2) comboText.text = "x" + comboIndex.ToString();
+        else comboText.text = null;
+        if (comboChecker > 4) {
+            comboText.text = null;
+            comboIndex = 1;
+        }
+
     }
 
     void OnDragBegin()
@@ -57,6 +72,8 @@ public class GameSystem : MonoBehaviour
             BallScript ball = hit.collider.GetComponent<BallScript>();
             AddRemoveBall(ball);
             isDragging = true;
+            
+            
         }
     }
     void OnDragging()
@@ -79,6 +96,7 @@ public class GameSystem : MonoBehaviour
     }
     void OnDragEnd()
     {
+        
         int removeCount = removeBalls.Count;
         if (removeCount >= 3)
         {
@@ -87,14 +105,27 @@ public class GameSystem : MonoBehaviour
                 Destroy(removeBalls[i].gameObject);
             }
             StartCoroutine(ballGenerator.Spawns(removeCount));            
-            UpdateScore(removeCount * 100);
+            UpdateScore(removeCount * 100*comboIndex);
             timeValue += removeCount;
             if (removeCount >= 9) honors.text = "Awesome!";
             else if (removeCount >= 6) honors.text = "Great!";
             else honors.text = "Good!";
             timeFixer = timeValue;
+            /////////////////////////////////////////////////////                   COMBO SYSTEM
+            
+            if (comboChecker < 4f)
+            {
+                comboIndex++;
+                comboChecker = 0f;
+            }
+            else
+            {
+                comboIndex = 1;
+                comboChecker = 0f;
+            }
         }
         removeBalls.Clear();
+
         isDragging = false;
     }
 
