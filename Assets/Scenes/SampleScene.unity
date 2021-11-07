@@ -371,7 +371,7 @@ MonoBehaviour:
   timerText: {fileID: 1060720618}
   timeValue: 0
   honors: {fileID: 1218029827}
-  comboText: {fileID: 0}
+  comboText: {fileID: 1328451859}
 --- !u!4 &452689463
 Transform:
   m_ObjectHideFlags: 0

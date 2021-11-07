@@ -54,6 +54,7 @@ public class GameSystem : MonoBehaviour
         comboChecker += Time.deltaTime;
         
         if (comboIndex >= 2) comboText.text = "x" + comboIndex.ToString();
+        
         else comboText.text = null;
         if (comboChecker > 4) {
             comboText.text = null;
@@ -107,7 +108,12 @@ public class GameSystem : MonoBehaviour
             StartCoroutine(ballGenerator.Spawns(removeCount));            
             UpdateScore(removeCount * 100*comboIndex);
             timeValue += removeCount;
-            if (removeCount >= 9) honors.text = "Awesome!";
+            if (removeCount >= 29)
+            {
+                honors.text = "Fever!";
+                comboIndex = 10;
+            }
+            else if (removeCount >= 9) honors.text = "Awesome!";
             else if (removeCount >= 6) honors.text = "Great!";
             else honors.text = "Good!";
             timeFixer = timeValue;
