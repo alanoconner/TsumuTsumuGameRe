@@ -19,6 +19,23 @@ public class GameSystem : MonoBehaviour
     private float timeFixer;
     private float comboChecker;    
     private int comboIndex;
+    private float timeMultiplier;
+    //-------------------------------------------------------------------------------
+    public GameObject good;
+    public GameObject great;
+    public GameObject awesome;
+    public GameObject fever;
+    //-------------------------------------------------------------------------------
+    public GameObject endCanvas;
+    public Text endScoretxt;
+    public Text highScoretxt;
+    public GameObject wall;
+    //-------------------------------------------------------------------------------
+    public GameObject rank5;
+    public GameObject rank4;
+    public GameObject rank3;
+    public GameObject rank2;
+    public GameObject rank1;
 
 
     void Start()
@@ -28,6 +45,7 @@ public class GameSystem : MonoBehaviour
         UpdateScore(0);
         StartCoroutine(ballGenerator.Spawns(70));
         comboChecker = 0f;
+        timeMultiplier = 1f;
         
     }
 
@@ -48,7 +66,13 @@ public class GameSystem : MonoBehaviour
         {
             OnDragging();
         }
-        if (timeFixer - timeValue > 3f || timeFixer - timeValue < (-3f)) honors.text = "";
+        if (timeFixer - timeValue > 2f || timeFixer - timeValue < (-2f))
+        {
+            great.SetActive(false);
+            good.SetActive(false);
+            awesome.SetActive(false);
+            fever.SetActive(false);
+        }
 
 
         comboChecker += Time.deltaTime;
@@ -56,10 +80,18 @@ public class GameSystem : MonoBehaviour
         if (comboIndex >= 2) comboText.text = "x" + comboIndex.ToString();
         
         else comboText.text = null;
-        if (comboChecker > 4) {
+        if (comboChecker > 1) {
             comboText.text = null;
             comboIndex = 1;
         }
+        
+        if (score > 10000) Time.timeScale = 1.3f;
+        else if (score > 13000) timeMultiplier = 1.6f;
+        else if (score > 17000) timeMultiplier = 1.9f;
+        else if (score > 20000) timeMultiplier = 2f;
+        else if (score > 25000) timeMultiplier = 2.2f;
+
+        if (timeValue < 0) EndGame();
 
     }
 
@@ -84,13 +116,18 @@ public class GameSystem : MonoBehaviour
         RaycastHit2D hit = Physics2D.Raycast(mousePosition, Vector2.zero);
         if (hit && hit.collider.GetComponent<BallScript>())
         {            
-            BallScript ball = hit.collider.GetComponent<BallScript>();            
+            BallScript ball = hit.collider.GetComponent<BallScript>();
+            //hit.collider.GetComponent<SpriteRenderer>().color = new Color(226f, 102f, 91f, 255f);
             if (ball.id == currentDraggingBall.id)
             {                
                 float distance = Vector2.Distance(ball.transform.position, currentDraggingBall.transform.position);
                 if (distance < 1.5)
                 {
                     AddRemoveBall(ball);
+                }
+                else
+                {
+                    ball.GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, 255f);
                 }
             }
         }
@@ -108,14 +145,14 @@ public class GameSystem : MonoBehaviour
             StartCoroutine(ballGenerator.Spawns(removeCount));            
             UpdateScore(removeCount * 100*comboIndex);
             timeValue += removeCount;
-            if (removeCount >= 29)
+            if (removeCount >= 10)
             {
-                honors.text = "Fever!";
-                comboIndex = 10;
+                fever.SetActive(true);
+                comboIndex = 12;
             }
-            else if (removeCount >= 9) honors.text = "Awesome!";
-            else if (removeCount >= 6) honors.text = "Great!";
-            else honors.text = "Good!";
+            else if (removeCount >= 6) awesome.SetActive(true);
+            else if (removeCount >= 5) great.SetActive(true);
+            else if (removeCount >= 4) good.SetActive(true);
             timeFixer = timeValue;
             /////////////////////////////////////////////////////                   COMBO SYSTEM
             
@@ -138,6 +175,7 @@ public class GameSystem : MonoBehaviour
     void AddRemoveBall(BallScript ball)
     {
         currentDraggingBall = ball;
+        //ball.GetComponent<SpriteRenderer>().color = new Color(226f, 102f, 91f, 255f);
         if (removeBalls.Contains(ball) == false)
         {
             removeBalls.Add(ball);
@@ -162,6 +200,49 @@ public class GameSystem : MonoBehaviour
     {
         SceneManager.LoadScene("SampleScene");
         Time.timeScale = 1;
+    }
+
+    void EndGame()
+    {
+        int rank = 0;
+        int savedscore = PlayerPrefs.GetInt("Highscore");
+        if (score / savedscore >= 1f) rank = 5;
+        else if (score / savedscore >= 0.8f) rank = 4;
+        else if (score / savedscore >= 0.6f) rank = 3;
+        else if (score / savedscore >= 0.4f) rank = 2;
+        else rank = 1;
+
+        if (score >= savedscore)
+        {
+            PlayerPrefs.SetInt("Highscore", score);
+        }
+        wall.SetActive(false);
+        endCanvas.SetActive(true);
+        
+        endScoretxt.text=score.ToString();
+        highScoretxt.text = PlayerPrefs.GetInt("Highscore").ToString();
+        switch (rank)
+        {
+            case 5:
+                rank5.SetActive(true);
+                break;
+            case 4:
+                rank4.SetActive(true);
+                break;
+            case 3:
+                rank3.SetActive(true);
+                break;
+            case 2:
+                rank2.SetActive(true);
+                break;
+            case 1:
+                rank1.SetActive(true);
+                break;
+            default:
+                break;
+        }
+
+
     }
 
 }
