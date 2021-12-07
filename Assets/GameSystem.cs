@@ -37,16 +37,22 @@ public class GameSystem : MonoBehaviour
     public GameObject rank2;
     public GameObject rank1;
 
+    public AudioSource gameMusic;
+    public AudioSource popsound;
+    public AudioSource endsound;
+
+
 
     void Start()
     {
+        Time.timeScale = 1f;
         timeValue = 60f;
         score = 0;
         UpdateScore(0);
         StartCoroutine(ballGenerator.Spawns(70));
         comboChecker = 0f;
         timeMultiplier = 1f;
-        
+        gameMusic.Play();
     }
 
     void Update()
@@ -91,7 +97,11 @@ public class GameSystem : MonoBehaviour
         else if (score > 20000) timeMultiplier = 2f;
         else if (score > 25000) timeMultiplier = 2.2f;
 
-        if (timeValue < 0) EndGame();
+        if (timeValue < 0)
+        {
+            endsound.Play();
+            EndGame();
+        }
 
     }
 
@@ -138,6 +148,7 @@ public class GameSystem : MonoBehaviour
         int removeCount = removeBalls.Count;
         if (removeCount >= 3)
         {
+            popsound.Play();
             for (int i = 0; i < removeCount; i++)
             {
                 Destroy(removeBalls[i].gameObject);
@@ -204,6 +215,8 @@ public class GameSystem : MonoBehaviour
 
     void EndGame()
     {
+        gameMusic.Pause();
+       
         int rank = 0;
         int savedscore = PlayerPrefs.GetInt("Highscore");
         if (score / savedscore >= 1f) rank = 5;
