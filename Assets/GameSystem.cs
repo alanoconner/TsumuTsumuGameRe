@@ -40,7 +40,12 @@ public class GameSystem : MonoBehaviour
     public AudioSource gameMusic;
     public AudioSource popsound;
     public AudioSource endsound;
+    ///------------------------------------------------------------------------------
+    private Renderer render;
+    private Color dragColor;
+    private Color selfColor;
 
+    private float selfX, selfY, selfZ;
 
 
     void Start()
@@ -52,6 +57,8 @@ public class GameSystem : MonoBehaviour
         StartCoroutine(ballGenerator.Spawns(70));
         comboChecker = 0f;
         timeMultiplier = 1f;
+        dragColor = new Color32(255,220,0,230);
+                
         gameMusic.Play();
     }
 
@@ -98,10 +105,10 @@ public class GameSystem : MonoBehaviour
         else if (score > 25000) timeMultiplier = 2.2f;
 
         if (timeValue < 0)
-        {
-            endsound.Play();
+        {            
             EndGame();
         }
+        if(timeValue==0f) endsound.Play();
 
     }
 
@@ -113,10 +120,18 @@ public class GameSystem : MonoBehaviour
         if (hit && hit.collider.GetComponent<BallScript>())
         {
             BallScript ball = hit.collider.GetComponent<BallScript>();
+
+            selfColor = hit.collider.GetComponent<Renderer>().material.color;
+            render = hit.collider.GetComponent<Renderer>();
+            render.material.color = dragColor;
+
+            selfX = hit.collider.GetComponent<Transform>().localScale.x;
+            selfY = hit.collider.GetComponent<Transform>().localScale.y;
+            selfZ = hit.collider.GetComponent<Transform>().localScale.z;
+            //hit.collider.GetComponent<Transform>().localScale.Set(selfX8)
+
             AddRemoveBall(ball);
-            isDragging = true;
-            
-            
+            isDragging = true;           
         }
     }
     void OnDragging()
@@ -127,18 +142,16 @@ public class GameSystem : MonoBehaviour
         if (hit && hit.collider.GetComponent<BallScript>())
         {            
             BallScript ball = hit.collider.GetComponent<BallScript>();
-            //hit.collider.GetComponent<SpriteRenderer>().color = new Color(226f, 102f, 91f, 255f);
+            render = hit.collider.GetComponent<Renderer>();
+
             if (ball.id == currentDraggingBall.id)
             {                
                 float distance = Vector2.Distance(ball.transform.position, currentDraggingBall.transform.position);
+                
                 if (distance < 1.5)
                 {
                     AddRemoveBall(ball);
-                }
-                else
-                {
-                    ball.GetComponent<SpriteRenderer>().color = new Color(255f, 255f, 255f, 255f);
-                }
+                }               
             }
         }
     }
@@ -178,6 +191,8 @@ public class GameSystem : MonoBehaviour
                 comboChecker = 0f;
             }
         }
+        removeBalls.ForEach(ReturnColor);
+
         removeBalls.Clear();
 
         isDragging = false;
@@ -186,7 +201,8 @@ public class GameSystem : MonoBehaviour
     void AddRemoveBall(BallScript ball)
     {
         currentDraggingBall = ball;
-        //ball.GetComponent<SpriteRenderer>().color = new Color(226f, 102f, 91f, 255f);
+        ball.GetComponent<Renderer>().material.color = dragColor;
+        //ball.GetComponent<Transform>().localScale.Set();
         if (removeBalls.Contains(ball) == false)
         {
             removeBalls.Add(ball);
@@ -216,7 +232,8 @@ public class GameSystem : MonoBehaviour
     void EndGame()
     {
         gameMusic.Pause();
-       
+        
+
         int rank = 0;
         int savedscore = PlayerPrefs.GetInt("Highscore");
         if (score / savedscore >= 1f) rank = 5;
@@ -257,5 +274,7 @@ public class GameSystem : MonoBehaviour
 
 
     }
+
+    void ReturnColor(BallScript ball) { ball.GetComponent<Renderer>().material.color = selfColor; }
 
 }

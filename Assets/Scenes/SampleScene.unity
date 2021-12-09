@@ -273,7 +273,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 78ce19db46d5e174cb7e791164377789, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -416,7 +416,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 5f2ac01816de75c4ebf3eda895a10b4f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -654,7 +654,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: 00000
+  m_Text: 
 --- !u!222 &404657061
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -878,7 +878,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 432568681}
   m_CullTransparentMesh: 1
---- !u!1 &439722483
+--- !u!1 &452689461
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -886,35 +886,105 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 439722485}
-  - component: {fileID: 439722484}
+  - component: {fileID: 452689463}
+  - component: {fileID: 452689462}
+  - component: {fileID: 452689464}
+  - component: {fileID: 452689465}
   m_Layer: 0
-  m_Name: Objects
+  m_Name: GameSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!82 &439722484
+--- !u!114 &452689462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452689461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf85860514715c4a81ce2a828a00512, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ballGenerator: {fileID: 1462101506}
+  removeBalls: []
+  scoreText: {fileID: 939460092}
+  timerText: {fileID: 1060720618}
+  timeValue: 0
+  honors: {fileID: 1218029827}
+  comboText: {fileID: 1328451859}
+  good: {fileID: 929181153}
+  great: {fileID: 2102087544}
+  awesome: {fileID: 1690893176}
+  fever: {fileID: 1913244760}
+  endCanvas: {fileID: 1180411376}
+  endScoretxt: {fileID: 404657060}
+  highScoretxt: {fileID: 25772283}
+  wall: {fileID: 199013877}
+  rank5: {fileID: 372068903}
+  rank4: {fileID: 1776586572}
+  rank3: {fileID: 1604097026}
+  rank2: {fileID: 2112734822}
+  rank1: {fileID: 122088711}
+  gameMusic: {fileID: 519420030}
+  popsound: {fileID: 1462101508}
+  endsound: {fileID: 452689465}
+--- !u!4 &452689463
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452689461}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &452689464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 452689461}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9332bff556e0101439214ef5bf2aab1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  staminatxt: {fileID: 0}
+  stamina: 0
+  timeNow: 0
+  realTime: 0
+  mixer: {fileID: 0}
+  mainMusic: {fileID: 0}
+  btnSound: {fileID: 0}
+--- !u!82 &452689465
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439722483}
+  m_GameObject: {fileID: 452689461}
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 24300002, guid: 24828e912c7bd644f8a8e42daaf6a23f,
     type: 2}
-  m_audioClip: {fileID: 8300000, guid: 57a929d952c79e2478ff839f16033028, type: 3}
-  m_PlayOnAwake: 1
+  m_audioClip: {fileID: 8300000, guid: 0bbc18d19f258334bad925800d04d94b, type: 3}
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
-  Priority: 128
+  Priority: 142
   DopplerLevel: 1
   MinDistance: 1
   MaxDistance: 500
@@ -992,106 +1062,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!4 &439722485
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 439722483}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1384.7688, y: 291.25238, z: -57.99877}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 11
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &452689461
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 452689463}
-  - component: {fileID: 452689462}
-  - component: {fileID: 452689464}
-  m_Layer: 0
-  m_Name: GameSystem
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &452689462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452689461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abf85860514715c4a81ce2a828a00512, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ballGenerator: {fileID: 1462101506}
-  removeBalls: []
-  scoreText: {fileID: 939460092}
-  timerText: {fileID: 1060720618}
-  timeValue: 0
-  honors: {fileID: 1218029827}
-  comboText: {fileID: 1328451859}
-  good: {fileID: 929181153}
-  great: {fileID: 2102087544}
-  awesome: {fileID: 1690893176}
-  fever: {fileID: 1913244760}
-  endCanvas: {fileID: 1180411376}
-  endScoretxt: {fileID: 404657060}
-  highScoretxt: {fileID: 25772283}
-  wall: {fileID: 199013877}
-  rank5: {fileID: 372068903}
-  rank4: {fileID: 1776586572}
-  rank3: {fileID: 1604097026}
-  rank2: {fileID: 2112734822}
-  rank1: {fileID: 122088711}
-  gameMusic: {fileID: 519420030}
-  popsound: {fileID: 1462101508}
-  endsound: {fileID: 439722484}
---- !u!4 &452689463
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452689461}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &452689464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452689461}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9332bff556e0101439214ef5bf2aab1d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  staminatxt: {fileID: 0}
-  stamina: 0
-  timeNow: 0
-  realTime: 0
-  mixer: {fileID: 0}
-  mainMusic: {fileID: 0}
-  btnSound: {fileID: 0}
 --- !u!1 &502412489
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1466,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 6725c115b035d1e45a94350f18dc204b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2019,7 +1989,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 2e0c309599e7c8244b824adcb73f9c96, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2673,7 +2643,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 24300002, guid: 24828e912c7bd644f8a8e42daaf6a23f,
     type: 2}
   m_audioClip: {fileID: 8300000, guid: 544c5074784098f4187a5cc876bdf862, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 0
@@ -2815,7 +2785,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 9a03d679789e0ba448e41e2d55c85e56, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -2946,7 +2916,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: c2cf8c85c7f284f449a74f15539e0840, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3252,7 +3222,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 13b982dc655e9db4fae4552ed1f19ecd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3690,7 +3660,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 3
   m_Sprite: {fileID: 21300000, guid: 078ccb11158748247ab21ffe5b50d171, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
